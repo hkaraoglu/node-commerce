@@ -1,0 +1,8 @@
+function ServiceResult()
+{
+
+}
+
+module.exports = {
+
+}

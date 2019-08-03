@@ -7,6 +7,11 @@ var config = {
             "database" : "node-commerce",
             "username" : "root",
             "password" : "1234"
+        },
+        "mongo" : {
+            "host" : "localhost",
+            "port" : "27017",
+            "database" : "local"
         }
      }
 

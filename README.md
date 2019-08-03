@@ -1,6 +1,6 @@
 
 # node-commerce  
-E-commerce API by written in NodeJS [Express](https://expressjs.com) Framework.   
+E-commerce API by written in  [Mongo](https://www.mongodb.com/) + [Express](https://expressjs.com) + [NodeJS](https://nodejs.org)  
   
 This project is under maintainence and development. This project aims to:  
   

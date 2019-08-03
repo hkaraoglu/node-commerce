@@ -4,36 +4,49 @@ class AddressModel extends Model
 {
     constructor(req, res)
     {
-        super("address AS a", req, res, "account/address");
+        super("address", req, res, "account/address");
     }
 
     async getAddressList()
     {
-       let result = await this.DB.select([
-                            "address_id",
-                            "a.customer_id",
-                            "a.firstname",
-                            "a.lastname",
-                            "a.country_id",
-                            "a.state_id",
-                            "a.postal_code",
-                            "a.address_line",
-                            "a.tax_office",
-                            "a.tax_number",
-                            "a.phone",
-                            "a.mobile_phone",
-                            "a.definition"])
-                            .join("customer AS c", {first : "c.customer_id", operator : "=", "second" : "a.customer_id"})
-                            .where("a.customer_id", "=",  this.customer.customer_id)
-                            .get();
+        const result = await this.dbo.collection("customer").aggregate([
+            {
+                $lookup :
+                    {
+                        from : "address",
+                        foreignField : "_id",
+                        localField : "addresses.address_id",
+                        as : "a"
+                    }
+            },
+            {
+                $match :
+                {
+                     "_id" : this.ObjectID(this.customer.customer_id)
+                }
+            },
+            { "$unwind" : "$a" },
+            {
+                $project : { "firstname": "$a.firstname",
+                            "lastname" : "$a.lastname",
+                            "country_id" : "$a.country_id",
+                            "postal_code" : "$a.postal_code",
+                            "address_line" : "$a.address_line",
+                            "definition" : "$a.definition",
+                            "tax_number" : "$a.tax_number",
+                            "tax_office" : "$a.tax_office",
+                            "phone" : "$a.phone",
+                            "mobile_phone" : "$a.mobile_phone",
+                            }
+            }
+        ]).toArray();
         return this.convertToServiceResult(result);
     }
 
     async insert()
     {
-        let result = await this.DB.insert(
+        let result = await this.collection.insert(
             {
-                    customer_id : this.customer.customer_id,
                     firstname   : this.body.firstname,
                     lastname    : this.body.lastname,
                     definition  : this.body.definition,
@@ -45,35 +58,43 @@ class AddressModel extends Model
                     phone       : this.body.phone,
                     mobile_phone : this.body.mobile_phone
         });
+        if(result.insertedIds.hasOwnProperty("0") )
+        {
+            let newAddressId = result.insertedIds["0"];
+            result = await this.dbo.collection("customer").updateOne(
+                { _id : this.ObjectID(this.customer.customer_id) },
+                {
+                    "$addToSet": {
+                        "addresses":
+                            {
+                                "address_id": newAddressId
+                            }
+                    }
+                });
+        }
         return this.convertToServiceResult(result, "address_added_successfully", "address_couldnt_be_added");
     }
 
     async update()
     {
-        let result = await this.DB.where("customer_id", "=", this.customer.customer_id)
-                                  .where("address_id", "=", this.body.address_id)
-                                  .update(
-        {
-            firstname   : this.body.firstname,
-            lastname    : this.body.lastname,
-            definition  : this.body.definition,
-            country_id  : this.body.country_id,
-            state_id    : this.body.state_id,
-            postal_code : this.body.postal_code,
-            address_line: this.body.address_line,
-            tax_number  : this.body.tax_number,
-            tax_office  : this.body.tax_office,
-            phone       : this.body.phone,
-            mobile_phone : this.body.mobile_phone
-        });
-        return this.convertToServiceResult(result, "address_updated_successfully", "address_couldnt_be_updated");
+
+
     }
 
     async delete()
     {
-        let result = await this.DB.where("customer_id", '=', this.customer.customer_id)
-                                  .where("address_id", '=', this.params.address_id)
-                                  .delete();
+        let result = await this.dbo.collection("customer").updateOne(
+            { _id : this.ObjectID(this.customer.customer_id) },
+            {
+                "$pull": {
+                    "addresses":
+                        {
+                            "address_id": this.ObjectID(this.params.address_id)
+                        }
+                }
+            });
+        console.log(result);
+        result = await this.collection.deleteOne({_id : this.ObjectID(this.params.address_id)});
         return this.convertToServiceResult(result, "address_removed_successfully", "address_couldnt_be_found");
     }
 }

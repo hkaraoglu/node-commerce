@@ -5,7 +5,12 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var routes = require('./routes.js');
+var mongoUtil = require( './data/mongo' );
 
+mongoUtil.connectToServer( function( err, client ) {
+    if (err) console.log(err);
+
+} );
 var app = express();
 var router = express.Router();
 

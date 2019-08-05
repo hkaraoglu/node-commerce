@@ -15,7 +15,7 @@ class AddressModel extends Model
                 _id         : this.ObjectID(this.params.address_id)
             },
             {
-                $project : { customer_id : 0 }
+                projection : { customer_id : 0 }
             }
         ).toArray();
         return this.convertToServiceResult(result);
@@ -28,7 +28,7 @@ class AddressModel extends Model
                 customer_id : this.ObjectID(this.customer.customer_id)
             },
             {
-                $project : { customer_id : 0 }
+                projection : { customer_id : 0 }
             }
         ).toArray();
         return this.convertToServiceResult(result);

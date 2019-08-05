@@ -9,6 +9,12 @@ class AddressService extends AuthorizedService
         this.addressModel = new AddressModel(req, res);
     }
 
+    async getAddressDetail()
+    {
+        let results =  await this.addressModel.getAddressDetail();
+        this.res.send(results);
+    }
+
     async getAddressList()
     {
         let results =  await this.addressModel.getAddressList();

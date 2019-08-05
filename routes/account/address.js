@@ -7,6 +7,10 @@ router.get('/getAddressList', (req, res, next) => {
     new AddressService(req, res, next).getAddressList();
 });
 
+router.get('/getAddressDetail/:address_id', (req, res, next) => {
+    new AddressService(req, res, next).getAddressDetail();
+});
+
 router.get('/deleteAddress/:address_id', (req, res, next) => {
     new AddressService(req, res, next).deleteAddress();
 });

@@ -1,12 +1,12 @@
 var AuthorizedService = require("../base/authorized_service");
-var OrderModel      = require("../../models/account/address");
+var OrderModel      = require("../../models/account/order");
 
 class OrderService extends AuthorizedService
 {
     constructor(req, res, next)
     {
         super(req, res, next);
-        this.ordermodel = new OrderModel(req, this.getCustomerId());
+        this.ordermodel = new OrderModel(req, res);
     }
 
     async getOrderList()
@@ -21,8 +21,11 @@ class OrderService extends AuthorizedService
         this.res.send(results);
     }
 
-    cancelOrder()
+    async cancelOrder()
     {
-
+        var results =  await this.ordermodel.cancelOrder();
+        this.res.send(results);
     }
 }
+
+module.exports = OrderService;

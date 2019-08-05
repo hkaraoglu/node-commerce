@@ -13,6 +13,6 @@
     "jade": "~1.11.0",
     "language-translator": "^1.2.5",
     "mongodb": "^3.3.0-beta2",
-    "morgan": "~1.9.0",
+    "morgan": "~1.9.0"
   }
 }

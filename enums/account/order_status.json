@@ -1,0 +1,10 @@
+{
+    "WAITING_FOR_APPROVAL"  : 1,
+    "APPROVED"              : 2,
+    "WAITING_FOR_SHIPPING"  : 3,
+    "SHIPPED"               : 4,
+    "DELIVERED"             : 5,
+    "CANCELLED"             : 6,
+    "SUSPICIOUS"            : 7,
+    "MISSING"               : 8
+}

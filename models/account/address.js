@@ -36,20 +36,9 @@ class AddressModel extends Model
 
     async insert()
     {
-        const result = await this.collection.insert(
-            {
-                    customer_id : this.ObjectID(this.customer.customer_id),
-                    firstname   : this.body.firstname,
-                    lastname    : this.body.lastname,
-                    definition  : this.body.definition,
-                    country_id  : this.body.country_id,
-                    postal_code : this.body.postal_code,
-                    address_line: this.body.address_line,
-                    tax_number  : this.body.tax_number,
-                    tax_office  : this.body.tax_office,
-                    phone       : this.body.phone,
-                    mobile_phone : this.body.mobile_phone
-        });
+        let addressData = this.getAddressData();
+        addressData.customer_id = this.ObjectID(this.customer.customer_id);
+        const result = await this.collection.insert(addressData);
         return this.convertToServiceResult(result, "address_added_successfully", "address_couldnt_be_added");
     }
 
@@ -61,19 +50,8 @@ class AddressModel extends Model
                customer_id : this.ObjectID(this.customer.customer_id)
             },
             {
-                $set :
-                {
-                    firstname   : this.body.firstname,
-                    lastname    : this.body.lastname,
-                    definition  : this.body.definition,
-                    country_id  : this.body.country_id,
-                    postal_code : this.body.postal_code,
-                    address_line: this.body.address_line,
-                    tax_number  : this.body.tax_number,
-                    tax_office  : this.body.tax_office,
-                    phone       : this.body.phone,
-                    mobile_phone : this.body.mobile_phone
-                }
+                $set : this.getAddressData()
+
             });
         return this.convertToServiceResult(result, "address_updated_successfully", "address_couldnt_be_updated");
     }
@@ -86,6 +64,22 @@ class AddressModel extends Model
                 customer_id : this.ObjectID(this.customer.customer_id)
             });
         return this.convertToServiceResult(result, "address_removed_successfully", "address_couldnt_be_found");
+    }
+
+    getAddressData()
+    {
+        return {
+            firstname   : this.body.firstname,
+            lastname    : this.body.lastname,
+            definition  : this.body.definition,
+            country_id  : this.body.country_id,
+            postal_code : this.body.postal_code,
+            address_line: this.body.address_line,
+            tax_number  : this.body.tax_number,
+            tax_office  : this.body.tax_office,
+            phone       : this.body.phone,
+            mobile_phone : this.body.mobile_phone
+        };
     }
 }
 

@@ -13,10 +13,11 @@ var config = {
             "port" : "27017",
             "database" : "local"
         }
-     }
-
-
-
+     },
+    "session" :
+    {
+        "secret_key" : "GJVt9fwBVPIDCHsN6D9E"
+    }
 };
 
 module.exports = config;

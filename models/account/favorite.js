@@ -1,5 +1,4 @@
-var Model = require('../base/model.js');
-var mongo = require('../../data/mongo');
+const Model = require('../base/model.js');
 
 class FavoriteModel extends Model
 {

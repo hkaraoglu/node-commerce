@@ -6,13 +6,30 @@ var logger = require('morgan');
 
 var routes = require('./routes.js');
 var mongoUtil = require( './data/mongo' );
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
+const config = require('./config');
 
+
+var app = express();
+var router = express.Router();
 mongoUtil.connectToServer( function( err, client ) {
     if (err) console.log(err);
 
 } );
-var app = express();
-var router = express.Router();
+/*
+mongoUtil.connectToServer( function( err, client ) {
+    if (err) console.log(err);
+
+    app.use(session(
+        {
+            secret: config.session.secret_key,
+            resave: false,
+            saveUninitialized: true,
+            store: new MongoStore({ client: client })
+        }));
+} );
+*/
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

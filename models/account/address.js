@@ -9,7 +9,7 @@ class AddressModel extends Model
 
     async getAddressDetail()
     {
-        const result = await this.collection.find(
+        const result = await this.collection.findOne(
             {
                 customer_id : this.ObjectID(this.customer.customer_id),
                 _id         : this.ObjectID(this.params.address_id)
@@ -17,7 +17,7 @@ class AddressModel extends Model
             {
                 projection : { customer_id : 0 }
             }
-        ).toArray();
+        );
         return result;
     }
 
@@ -38,7 +38,7 @@ class AddressModel extends Model
     {
         let addressData = this.getAddressData();
         addressData.customer_id = this.ObjectID(this.customer.customer_id);
-        return await this.collection.insert(addressData);
+        return await this.collection.insertOne(addressData);
     }
 
     async update()

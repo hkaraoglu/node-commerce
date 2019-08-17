@@ -102,7 +102,7 @@ class CartModel extends Model
                         }
                 }
             });
-        return this.convertToServiceResult(result, "product_removed_from_your_cart", "product_couldnt_be_removed_from_your_cart");
+        return result;
     }
 }
 

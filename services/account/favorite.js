@@ -1,30 +1,51 @@
-var AuthorizedService = require("../base/authorized_service");
-var FavoriteModel      = require("../../models/account/favorite");
+const Service       = require("../base/service");
+const FavoriteModel = require("../../models/account/favorite");
 
-class FavoriteService extends AuthorizedService
+class FavoriteService extends Service
 {
     constructor(req, res, next)
     {
         super(req, res, next);
         this.favoriteModel = new FavoriteModel(req, res);
+        this.lt.load("account/favorite");
     }
 
     async getFavoriteProducts()
     {
-        let results =  await this.favoriteModel.getFavoriteProducts();
-        this.res.send(results);
+        let favoriteProducts =  await this.favoriteModel.getFavoriteProducts();
+        this.serviceResult.success()
+                          .setData(favoriteProducts);
+        this.send();
     }
 
     async addProductToFavorites()
     {
-        let results =  await this.favoriteModel.addProductToFavorites();
-        this.res.send(results);
+        let insertResult =  await this.favoriteModel.addProductToFavorites();
+        if(insertResult && insertResult.result.nModified == 1)
+        {
+            this.serviceResult.success()
+                              .setMessage(this.lt.get("product_added_into_your_favorites"));
+        }
+        else
+        {
+            this.serviceResult.setMessage(this.lt.get("product_couldnt_be_added_into_your_favorites"));
+        }
+        this.send();
     }
 
     async removeProductFromFavorites()
     {
-        let results =  await this.favoriteModel.removeProductFromFavorites();
-        this.res.send(results);
+        let removeResult =  await this.favoriteModel.removeProductFromFavorites();
+        if(removeResult && removeResult.nModified)
+        {
+            this.serviceResult.success()
+                              .setMessage(this.lt.get("product_removed_from_your_favorites"));
+        }
+        else
+        {
+            this.serviceResult.setMessage(this.lt.get("product_was_not_found"));
+        }
+        this.send();
     }
 }
 

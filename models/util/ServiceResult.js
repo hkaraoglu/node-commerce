@@ -11,16 +11,19 @@ class ServiceResult
     success()
     {
         this._success = true;
+        return this;
     }
 
     setMessage(message)
     {
         this.message = message;
+        return this;
     }
 
     setErrorCode(errorCode)
     {
         this.errorCode = errorCode;
+        return this;
     }
 
     setData(data)

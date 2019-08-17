@@ -1,7 +1,7 @@
-var AuthorizedService = require("../base/authorized_service");
-var OrderModel      = require("../../models/account/order");
+const Service    = require("../base/service");
+const OrderModel = require("../../models/account/order");
 
-class OrderService extends AuthorizedService
+class OrderService extends Service
 {
     constructor(req, res, next)
     {
@@ -11,20 +11,40 @@ class OrderService extends AuthorizedService
 
     async getOrderList()
     {
-        var results =  await this.ordermodel.getOrderList();
-        this.res.send(results);
+        const orderList =  await this.ordermodel.getOrderList();
+        this.serviceResult.success()
+                          .setData(orderList);
+        this.send();
     }
 
     async getOrderDetail()
     {
-        var results =  await this.ordermodel.getOrderDetail();
-        this.res.send(results);
+        const orderDetail =  await this.ordermodel.getOrderDetail();
+        if(orderDetail)
+        {
+            this.serviceResult.success()
+                              .setData(orderDetail);
+        }
+        else
+        {
+            this.serviceResult.setMessage(this.lt.get("order_was_not_found"));
+        }
+        this.send();
     }
 
     async cancelOrder()
     {
-        var results =  await this.ordermodel.cancelOrder();
-        this.res.send(results);
+        const cancelResult =  await this.ordermodel.cancelOrder();
+        if(cancelResult && cancelResult.result.nModified == 1)
+        {
+            this.serviceResult.success()
+                              .setMessage(this.lt.get("your_order_was_cancelled"));
+        }
+        else
+        {
+            this.serviceResult.setMessage(this.lt.get("order_was_not_found"));
+        }
+        this.send();
     }
 }
 

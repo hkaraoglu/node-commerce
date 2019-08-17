@@ -1,42 +1,82 @@
-var AuthorizedService = require("../base/authorized_service");
-var AddressModel      = require("../../models/account/address");
+const Service      = require("../base/service");
+const AddressModel = require("../../models/account/address");
 
-class AddressService extends AuthorizedService
+class AddressService extends Service
 {
     constructor(req, res, next)
     {
         super(req, res, next);
         this.addressModel = new AddressModel(req, res);
+        this.lt.load("account/address");
     }
 
     async getAddressDetail()
     {
-        let results =  await this.addressModel.getAddressDetail();
-        this.res.send(results);
+        let address =  await this.addressModel.getAddressDetail();
+        if(address)
+        {
+            this.serviceResult.success()
+                              .setData(address);
+        }
+        else
+        {
+            this.serviceResult.setMessage(this.lt.get("address_couldnt_be_found"))
+        }
+        this.send();
     }
 
     async getAddressList()
     {
-        let results =  await this.addressModel.getAddressList();
-        this.res.send(results);
+        let addresses =  await this.addressModel.getAddressList();
+        this.serviceResult.success()
+                          .setData(addresses);
+        this.send();
     }
 
     async addAddress()
     {
-        let results =  await this.addressModel.insert();
-        this.res.send(results);
+        let insertResult =  await this.addressModel.insert();
+        if(insertResult && insertResult.insertedCount == 1)
+        {
+            this.serviceResult.success()
+                              .setData(insertResult.ops);
+        }
+        else
+        {
+            this.serviceResult.setMessage(this.lt.get("address_couldnt_be_added"));
+        }
+        this.send();
     }
 
     async updateAddress()
     {
-        let results =  await this.addressModel.update();
-        this.res.send(results);
+        let updateResult =  await this.addressModel.update();
+        if(updateResult && updateResult.result.nModified == 1)
+        {
+            this.serviceResult.success()
+                              .setMessage(this.lt.get("address_couldnt_be_updated"))
+                              .setData(updateResult.ops);
+        }
+        else
+        {
+            this.serviceResult.setMessage(this.lt.get("address_couldnt_be_updated"));
+        }
+        this.send();
     }
 
     async deleteAddress()
     {
-        let result =  await this.addressModel.delete();
-        this.res.send(result);
+        let deleteResult =  await this.addressModel.delete();
+        if(deleteResult && deleteResult.deletedCount == 1)
+        {
+            this.serviceResult.success()
+                              .setMessage(this.lt.get("address_was_deleted"));
+        }
+        else
+        {
+            this.serviceResult.setMessage(this.lt.get("address_couldnt_be_found"));
+        }
+        this.send();
     }
 }
 

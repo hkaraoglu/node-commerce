@@ -1,20 +1,12 @@
-var AuthorizedService = require("../base/authorized_service");
-var ConfirmModel      = require("../../models/checkout/confirm");
+const Service      = require("../base/service");
 
-class ConfirmService extends AuthorizedService
+
+class ConfirmService extends Service
 {
     constructor(req, res, next)
     {
         super(req, res, next);
-        this.confirmModel = new ConfirmModel(req, res);
     }
-
-    async confirmOrder()
-    {
-        let results =  await this.confirmModel.getCartProducts();
-        this.res.send(results);
-    }
-
 }
 
 module.exports = ConfirmService;

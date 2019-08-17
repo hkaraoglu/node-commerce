@@ -1,7 +1,7 @@
-var AuthorizedService = require("../base/authorized_service");
-var PaymentModel      = require("../../models/checkout/payment");
+const Service      = require("../base/service");
+const PaymentModel      = require("../../models/checkout/payment");
 
-class PaymentService extends AuthorizedService
+class PaymentService extends Service
 {
     constructor(req, res, next)
     {

@@ -1,3 +1,5 @@
+const ServiceResult = require('../../models/util/ServiceResult');
+
 class Service
 {
     constructor(req, res, next)
@@ -5,14 +7,14 @@ class Service
         this.req  = req;
         this.res  = res;
         this.next = next;
+        this.lt = res.locals._lt;
+        this.serviceResult = new ServiceResult();
     }
 
-    getCustomerId()
+    send()
     {
-        return 1;
-        //return this.req.session.customer_id;
+        this.res.send(this.serviceResult.get());
     }
-
 }
 
 module.exports = Service;

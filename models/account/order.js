@@ -1,11 +1,11 @@
-var Model = require('../base/model.js');
-var OrderStatusEnum = require('../../enums/account/order_status');
+const Model = require('../base/model.js');
+const OrderStatusEnum = require('../../enums/account/order_status');
 
 class OrderModel extends Model
 {
     constructor(req, res)
     {
-        super("order", req, res, "account/order");
+        super("order", req, res);
     }
 
     async getOrderDetail()
@@ -22,7 +22,7 @@ class OrderModel extends Model
                 }
             }
         ).toArray();
-        return this.convertToServiceResult(result);
+        return result;
     }
 
     async getOrderList()
@@ -38,7 +38,7 @@ class OrderModel extends Model
                 }
             }
         ).toArray();
-        return this.convertToServiceResult(result);
+        return result;
     }
 
     async cancelOrder()
@@ -52,7 +52,7 @@ class OrderModel extends Model
                 $set : { status_id : OrderStatusEnum.CANCELLED }
             }
         );
-        return this.convertToServiceResult(result, "your_order_was_cancelled", "your_order_couldnt_be_cancelled");
+        return result;
     }
 
 }

@@ -6,7 +6,8 @@ var logger = require('morgan');
 
 var routes = require('./routes.js');
 var mongoUtil = require( './data/mongo' );
-const session = require('express-session');
+const session = require('express-session')
+const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
 const config = require('./config');
 
@@ -17,19 +18,18 @@ mongoUtil.connectToServer( function( err, client ) {
     if (err) console.log(err);
 
 } );
-/*
-mongoUtil.connectToServer( function( err, client ) {
-    if (err) console.log(err);
 
-    app.use(session(
-        {
-            secret: config.session.secret_key,
-            resave: false,
-            saveUninitialized: true,
-            store: new MongoStore({ client: client })
-        }));
-} );
-*/
+mongoose.connect('mongodb://localhost:27017/local', { useNewUrlParser: true });
+mongoose.Promise = global.Promise;
+const db = mongoose.connection;
+
+app.use(cookieParser());
+app.use(session({
+    secret: 'a3lllfmanfndf',
+    resave: false,
+    saveUninitialized: true,
+    store: new MongoStore({ mongooseConnection: db })
+}))
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

@@ -12,7 +12,7 @@ class AuthService extends AuthorizedService
     async getAddressList()
     {
         var results =  await this.addressModel.getAddressList(this.getCustomerId());
-        this.res.send(results);
+        this.send(results);
     }
 
     async addAddress()

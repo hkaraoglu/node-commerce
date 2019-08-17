@@ -1,10 +1,10 @@
-var Model = require('../base/model.js');
+const Model = require('../base/model.js');
 
 class CartModel extends Model
 {
     constructor(req, res)
     {
-        super("customer", req, res, "checkout/cart");
+        super("customer", req, res);
     }
 
     async getCartProducts()
@@ -27,9 +27,18 @@ class CartModel extends Model
                     {
                         "_id" : this.ObjectID(this.customer.customer_id)
                     }
+            },
+            {
+                $project : {
+                    "product_id" : "$p.product_id",
+                    "name": "$p.name",
+                    "price" : "$p.price",
+                    "list_price" : "$p.list_price",
+                    "quantity" : "$cart_products.quantity"
+                }
             }
         ]).toArray();
-        return this.convertToServiceResult(result);
+        return result;
     }
 
     async updateQuantity()
@@ -44,7 +53,7 @@ class CartModel extends Model
 
         }
 
-        return this.convertToServiceResult(result, "product_added_into_your_cart", "product_couldnt_be_added_into_your_cart");
+        return result;
     }
 
     async addProductToCart()
@@ -78,7 +87,7 @@ class CartModel extends Model
                  });
          }
 
-        return this.convertToServiceResult(result, "product_added_into_your_cart", "product_couldnt_be_added_into_your_cart");
+        return result;
     }
 
     async removeProductFromCart()

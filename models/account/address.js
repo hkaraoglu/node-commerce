@@ -1,10 +1,10 @@
-var Model = require('../base/model.js');
+const Model = require('../base/model.js');
 
 class AddressModel extends Model
 {
     constructor(req, res)
     {
-        super("address", req, res, "account/address");
+        super("address", req, res);
     }
 
     async getAddressDetail()
@@ -18,7 +18,7 @@ class AddressModel extends Model
                 projection : { customer_id : 0 }
             }
         ).toArray();
-        return this.convertToServiceResult(result);
+        return result;
     }
 
     async getAddressList()
@@ -31,15 +31,14 @@ class AddressModel extends Model
                 projection : { customer_id : 0 }
             }
         ).toArray();
-        return this.convertToServiceResult(result);
+        return result;
     }
 
     async insert()
     {
         let addressData = this.getAddressData();
         addressData.customer_id = this.ObjectID(this.customer.customer_id);
-        const result = await this.collection.insert(addressData);
-        return this.convertToServiceResult(result, "address_added_successfully", "address_couldnt_be_added");
+        return await this.collection.insert(addressData);
     }
 
     async update()
@@ -53,7 +52,7 @@ class AddressModel extends Model
                 $set : this.getAddressData()
 
             });
-        return this.convertToServiceResult(result, "address_updated_successfully", "address_couldnt_be_updated");
+        return result;
     }
 
     async delete()
@@ -63,7 +62,7 @@ class AddressModel extends Model
                 _id : this.ObjectID(this.params.address_id),
                 customer_id : this.ObjectID(this.customer.customer_id)
             });
-        return this.convertToServiceResult(result, "address_removed_successfully", "address_couldnt_be_found");
+        return result;
     }
 
     getAddressData()

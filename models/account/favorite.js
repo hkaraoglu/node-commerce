@@ -4,7 +4,7 @@ class FavoriteModel extends Model
 {
     constructor(req, res)
     {
-        super("customer", req, res, "account/favorite");
+        super("customer", req, res);
     }
 
     async getFavoriteProducts()
@@ -36,7 +36,7 @@ class FavoriteModel extends Model
                 }
             }
         ]).toArray();
-        return this.convertToServiceResult(result);
+        return result;
     }
 
     async addProductToFavorites()
@@ -51,7 +51,7 @@ class FavoriteModel extends Model
                         }
                 }
             });
-        return this.convertToServiceResult(result, "product_added_into_your_favorites", "product_couldnt_be_added_into_your_favorites");
+        return result;
     }
 
     async removeProductFromFavorites()
@@ -66,7 +66,7 @@ class FavoriteModel extends Model
                         }
                 }
             });
-        return this.convertToServiceResult(result, "product_removed_from_your_favorites", "product_couldnt_be_removed_from_your_favorites");
+        return result;
     }
 }
 

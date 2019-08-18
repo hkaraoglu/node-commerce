@@ -1,5 +1,6 @@
 {
 	"invalid_email_or_password": "Invalid Email Address or Password!",
 	"session_was_ended": "Session was ended!",
-	"error_session_expired": "sasd"
+	"error_session_expired": "sasd",
+	"user_registered": "User registration completed!"
 }

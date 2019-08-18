@@ -13,7 +13,7 @@ class CustomerModel extends Model
        const result = await this.collection.findOne(
            {
             email : this.body.email,
-            password : Crypto.createHash('sha256').update(this.body.password).digest('hex')
+            password : this.getEncryptedPassword(this.body.password)
            },
            {
                projection :
@@ -23,6 +23,23 @@ class CustomerModel extends Model
            }
        );
        return result;
+    }
+
+    async addCustomer()
+    {
+       return await this.collection.insertOne(
+           {
+               firstname : this.body.firstname,
+               lastname : this.body.lastname,
+               email : this.body.email,
+               password : this.getEncryptedPassword(this.body.password)
+           }
+       );
+    }
+
+    getEncryptedPassword()
+    {
+        return Crypto.createHash('sha256').update(this.body.password).digest('hex')
     }
 
 }

@@ -15,36 +15,36 @@ This project is under maintainence and development. This project aims to:
 
 ## *Auth*
 
-**[POST]**
-**auth/login**
+**[POST]**<br>
+**auth/login**<br>
 	Login for a user in the system.
 	
-**[GET]**
-**auth/logout**
+**[GET]**<br>
+**auth/logout**<br>
     Logout user and delete session from the system.
     
-   **[POST]**
-**auth/register**
+   **[POST]**<br>
+**auth/register**<br>
 	Register a user into the system.
 
 ## *Account*
 
-**[GET]**
-**account/address**
+**[GET]**<br>
+**account/address**<br>
 Returns user's address list.
 
-**[GET]**
-**account/address/:address_id**
+**[GET]**<br>
+**account/address/:address_id**<br>
 Returns user's an address by address_id.
 
-**[POST]**
-**account/address**
+**[POST]**<br>
+**account/address**<br>
 Adds a new address for a user.
 
-**[PUT]**
-**account/address/:address_id**
+**[PUT]**<br>
+**account/address/:address_id**<br>
 Updates user's an address by address_id.
 
-**[DELETE]**
-**account/address/:address_id**
+**[DELETE]**<br>
+**account/address/:address_id**<br>
 Deletes user's an address by address_id.

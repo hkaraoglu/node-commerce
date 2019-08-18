@@ -1,4 +1,4 @@
-var config = {
+module.exports  = {
 
     "db" :{
         "mysql" : {
@@ -19,5 +19,3 @@ var config = {
         "secret_key" : "GJVt9fwBVPIDCHsN6D9E"
     }
 };
-
-module.exports = config;

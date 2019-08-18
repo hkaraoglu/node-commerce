@@ -1,19 +1,17 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-
-var routes = require('./routes.js');
-var mongoUtil = require( './data/mongo' );
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const routes = require('./routes.js');
+const mongoUtil = require( './data/mongo' );
 const session = require('express-session')
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
 const config = require('./config');
+const app = express();
+const router = express.Router();
 
-
-var app = express();
-var router = express.Router();
 mongoUtil.connectToServer( function( err, client ) {
     if (err) console.log(err);
 
@@ -29,7 +27,7 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     store: new MongoStore({ mongooseConnection: db })
-}))
+}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -40,7 +38,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-var  languageTranslator = require('language-translator');
+const  languageTranslator = require('language-translator');
 app.use(languageTranslator.init(
     {
         langs          : ["tr", "en"],

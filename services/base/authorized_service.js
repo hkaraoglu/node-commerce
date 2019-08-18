@@ -1,4 +1,4 @@
-var Service = require('./service');
+const Service = require('./service');
 
 class AuthorizedService extends Service
 {

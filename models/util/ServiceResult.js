@@ -1,3 +1,4 @@
+const ServiceResultEnum = require('../../enums/util/service_result.json');
 class ServiceResult
 {
     constructor()
@@ -6,6 +7,7 @@ class ServiceResult
         this.message = "";
         this.errorCode = -1;
         this.data = {};
+        this.errorCodes = ServiceResultEnum;
     }
 
     success()

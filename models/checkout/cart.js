@@ -25,7 +25,7 @@ class CartModel extends Model
             {
                 $match :
                     {
-                        "_id" : this.ObjectID(this.customer.customer_id)
+                        "_id" : this.ObjectID(this.customer._id)
                     }
             },
             {
@@ -48,7 +48,7 @@ class CartModel extends Model
         if(this.query.quantity !== undefined && Number(this.query.quantity) > 0)
         {
             quantity = Number(this.query.quantity);
-             result = await this.collection.updateOne( { _id : this.ObjectID(this.customer.customer_id), "cart_products.product_id" : this.ObjectID(this.params.product_id) } ,
+             result = await this.collection.updateOne( { _id : this.ObjectID(this.customer._id), "cart_products.product_id" : this.ObjectID(this.params.product_id) } ,
                  {$set : {"cart_products.$.quantity" : quantity }});
 
         }
@@ -60,12 +60,12 @@ class CartModel extends Model
     {
         let result;
         let productCountInCart = await this.collection.find(
-            { _id : this.ObjectID(this.customer.customer_id), "cart_products.product_id" : this.ObjectID(this.params.product_id)},
+            { _id : this.ObjectID(this.customer._id), "cart_products.product_id" : this.ObjectID(this.params.product_id)},
          ).count();
          if(productCountInCart)
          {
              result = await this.collection.updateOne(
-                 { _id : this.ObjectID(this.customer.customer_id), "cart_products.product_id" : this.ObjectID(this.params.product_id)},
+                 { _id : this.ObjectID(this.customer._id), "cart_products.product_id" : this.ObjectID(this.params.product_id)},
                  { $inc :
                          {
                              "cart_products.$.quantity" : 1
@@ -75,7 +75,7 @@ class CartModel extends Model
          else
          {
              result = await this.collection.updateOne(
-                 { _id : this.ObjectID(this.customer.customer_id)},
+                 { _id : this.ObjectID(this.customer._id)},
                  {
                      "$addToSet": {
                          "cart_products":
@@ -93,7 +93,7 @@ class CartModel extends Model
     async removeProductFromCart()
     {
         const result = await this.collection.updateOne(
-            { _id : this.ObjectID(this.customer.customer_id) },
+            { _id : this.ObjectID(this.customer._id) },
             {
                 "$pull": {
                     "cart_products":

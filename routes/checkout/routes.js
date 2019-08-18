@@ -1,8 +1,6 @@
-var express = require('express');
-var router  = express.Router();
-
-var CartRoute     = require("./cart");
-var PaymentRoute     = require("./payment");
+const router        = require('express').Router();
+const CartRoute     = require("./cart");
+const PaymentRoute  = require("./payment");
 
 router.use('/cart', CartRoute);
 router.use('/payment', PaymentRoute);

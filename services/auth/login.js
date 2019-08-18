@@ -15,8 +15,16 @@ class LoginService extends Service
         let customer =  await this.customerModel.getCustomer();
         if(customer)
         {
-            this.serviceResult.success();
-            this.serviceResult.setData(customer);
+            console.log(customer);
+            customer.language_id = 1; // will be refactored...
+            this.req.session.customer = customer;
+            const parent = this;
+            this.req.session.save(function(err)
+            {
+                console.log(err);
+            });
+            parent.serviceResult.success()
+                .setData(customer);
         }
         else
         {

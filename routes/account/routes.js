@@ -1,9 +1,7 @@
-var express = require('express');
-var router  = express.Router();
-
-var AddressRoute     = require("./address");
-var FavoriteRoute    = require("./favorite");
-var OrderRoute       = require("./order");
+const router         = require('express').Router();
+const AddressRoute   = require("./address");
+const FavoriteRoute  = require("./favorite");
+const OrderRoute     = require("./order");
 
 router.use('/address', AddressRoute);
 router.use('/favorite', FavoriteRoute);

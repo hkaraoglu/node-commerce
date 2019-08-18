@@ -1,21 +1,17 @@
-var express = require('express');
-var router   = express.Router();
+const router = require('express').Router();
+const CustomerMiddleware = require("../../middlewares/customer");
+const OrderService     = require("../../services/account/order");
 
-var OrderService     = require("../../services/account/order");
-
-router.get('/getOrderDetail/:order_id', (req, res, next) => {
+router.get('/getOrderDetail/:order_id', CustomerMiddleware, (req, res, next) => {
     new OrderService(req, res, next).getOrderDetail();
 });
 
-router.get('/getOrderList/', (req, res, next) => {
+router.get('/getOrderList/', CustomerMiddleware, (req, res, next) => {
     new OrderService(req, res, next).getOrderList();
 });
 
-router.get('/cancelOrder/:order_id', (req, res, next) => {
+router.get('/cancelOrder/:order_id', CustomerMiddleware, (req, res, next) => {
     new OrderService(req, res, next).cancelOrder();
 });
 
-
-
 module.exports = router;
-

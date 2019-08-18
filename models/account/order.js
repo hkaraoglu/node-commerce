@@ -13,7 +13,7 @@ class OrderModel extends Model
         const result = await this.collection.find(
             {
                 _id : this.ObjectID(this.params.order_id),
-                customer_id : this.ObjectID(this.customer.customer_id)
+                customer_id : this.ObjectID(this.customer._id)
             },
             {
                 projection :
@@ -29,7 +29,7 @@ class OrderModel extends Model
     {
         let result = await this.collection.find(
             {
-                customer_id : this.ObjectID(this.customer.customer_id)
+                customer_id : this.ObjectID(this.customer._id)
             },
             {
                 projection :
@@ -46,7 +46,7 @@ class OrderModel extends Model
         const result = await this.collection.updateOne(
             {
                 _id         : this.ObjectID(this.params.order_id),
-                customer_id : this.ObjectID(this.customer.customer_id)
+                customer_id : this.ObjectID(this.customer._id)
             },
             {
                 $set : { status_id : OrderStatusEnum.CANCELLED }

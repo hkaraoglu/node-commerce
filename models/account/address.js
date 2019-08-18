@@ -11,7 +11,7 @@ class AddressModel extends Model
     {
         const result = await this.collection.findOne(
             {
-                customer_id : this.ObjectID(this.customer.customer_id),
+                customer_id : this.ObjectID(this.customer._id),
                 _id         : this.ObjectID(this.params.address_id)
             },
             {
@@ -25,7 +25,7 @@ class AddressModel extends Model
     {
         const result = await this.collection.find(
             {
-                customer_id : this.ObjectID(this.customer.customer_id)
+                customer_id : this.ObjectID(this.customer._id)
             },
             {
                 projection : { customer_id : 0 }
@@ -37,7 +37,7 @@ class AddressModel extends Model
     async insert()
     {
         let addressData = this.getAddressData();
-        addressData.customer_id = this.ObjectID(this.customer.customer_id);
+        addressData.customer_id = this.ObjectID(this.customer._id);
         return await this.collection.insertOne(addressData);
     }
 
@@ -46,7 +46,7 @@ class AddressModel extends Model
         const result = await this.collection.update(
             {
                _id : this.ObjectID(this.body.address_id),
-               customer_id : this.ObjectID(this.customer.customer_id)
+               customer_id : this.ObjectID(this.customer._id)
             },
             {
                 $set : this.getAddressData()
@@ -60,7 +60,7 @@ class AddressModel extends Model
         const result = await this.collection.deleteOne(
             {
                 _id : this.ObjectID(this.params.address_id),
-                customer_id : this.ObjectID(this.customer.customer_id)
+                customer_id : this.ObjectID(this.customer._id)
             });
         return result;
     }

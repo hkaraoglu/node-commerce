@@ -1,8 +1,8 @@
-var mongoDb = require('../../data/mongo');
+const mongoDb = require('../../data/mongo');
 
 class Model
 {
-    constructor(table, req, res, langFilePath)
+    constructor(table, req, res)
     {
         this.ObjectID = require('mongodb').ObjectID;
         this.dbo = mongoDb.getDb();
@@ -10,10 +10,8 @@ class Model
         this.body = req.body;
         this.params = req.params;
         this.query = req.query;
-        this.customer = { customer_id : "5d45745a6ee6f0b4a75e67ba", firstname : "hasan", "language_id" : 1}; // for now, it is dummy data, next it fetched from req.session.customer;
+        this.customer = req.session.customer;
     }
-
-
 }
 
 module.exports = Model;

@@ -1,10 +1,8 @@
-var express = require('express');
-var router  = express.Router();
-
-var LoginRoute     = require("./login");
-
+const router         = require('express').Router();
+const LoginRoute     = require("./login");
+const LogoutRoute     = require("./logout");
 
 router.use('/login', LoginRoute);
-
+router.use('/logout', LogoutRoute);
 
 module.exports = router;

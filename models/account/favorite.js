@@ -25,7 +25,7 @@ class FavoriteModel extends Model
             {
                 $match :
                     {
-                        "_id" : this.ObjectID(this.customer.customer_id)
+                        "_id" : this.ObjectID(this.customer._id)
                     }
             },
             {
@@ -42,7 +42,7 @@ class FavoriteModel extends Model
     async addProductToFavorites()
     {
         const result = await this.collection.updateOne(
-            { _id : this.ObjectID(this.customer.customer_id) },
+            { _id : this.ObjectID(this.customer._id) },
             {
                 "$addToSet": {
                     "favorite_products":
@@ -57,7 +57,7 @@ class FavoriteModel extends Model
     async removeProductFromFavorites()
     {
         const result = await this.collection.updateOne(
-            { _id : this.ObjectID(this.customer.customer_id) },
+            { _id : this.ObjectID(this.customer._id) },
             {
                 "$pull": {
                     "favorite_products":

@@ -43,13 +43,13 @@ class CartModel extends Model
 
     async updateQuantity()
     {
-        const defaultQuantity = 1;
+        let quantity = 1;
         let result = {};
         if(this.query.quantity !== undefined && Number(this.query.quantity) > 0)
         {
             quantity = Number(this.query.quantity);
              result = await this.collection.updateOne( { _id : this.ObjectID(this.customer._id), "cart_products.product_id" : this.ObjectID(this.params.product_id) } ,
-                 {$set : {"cart_products.$.quantity" : defaultQuantity }});
+                 {$set : {"cart_products.$.quantity" : quantity }});
 
         }
 

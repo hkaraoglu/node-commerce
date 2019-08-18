@@ -56,13 +56,14 @@ class FavoriteModel extends Model
 
     async removeProductFromFavorites()
     {
+        console.log(this.ObjectID(this.params.product_id));
         const result = await this.collection.updateOne(
             { _id : this.ObjectID(this.customer._id) },
             {
                 "$pull": {
                     "favorite_products":
                         {
-                            "product_id": this.params.product_id
+                            "product_id": this.ObjectID(this.params.product_id)
                         }
                 }
             });

@@ -35,7 +35,7 @@ class OrderService extends Service
     async cancelOrder()
     {
         const cancelResult =  await this.ordermodel.cancelOrder();
-        if(cancelResult && cancelResult.result.nModified == 1)
+        if(cancelResult && cancelResult.modifiedCount == 1)
         {
             this.serviceResult.success()
                               .setMessage(this.lt.get("your_order_was_cancelled"));

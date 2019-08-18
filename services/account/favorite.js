@@ -21,7 +21,7 @@ class FavoriteService extends Service
     async addProductToFavorites()
     {
         let insertResult =  await this.favoriteModel.addProductToFavorites();
-        if(insertResult && insertResult.result.nModified == 1)
+        if(insertResult && insertResult.modifiedCount == 1)
         {
             this.serviceResult.success()
                               .setMessage(this.lt.get("product_added_into_your_favorites"));
@@ -36,7 +36,8 @@ class FavoriteService extends Service
     async removeProductFromFavorites()
     {
         let removeResult =  await this.favoriteModel.removeProductFromFavorites();
-        if(removeResult && removeResult.nModified)
+        console.log(removeResult);
+        if(removeResult && removeResult.matchedCount > 0)
         {
             this.serviceResult.success()
                               .setMessage(this.lt.get("product_removed_from_your_favorites"));

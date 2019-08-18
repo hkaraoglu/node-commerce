@@ -43,14 +43,13 @@ class AddressModel extends Model
 
     async update()
     {
-        const result = await this.collection.update(
+        const result = await this.collection.updateOne(
             {
-               _id : this.ObjectID(this.body.address_id),
+               _id : this.ObjectID(this.params.address_id),
                customer_id : this.ObjectID(this.customer._id)
             },
             {
                 $set : this.getAddressData()
-
             });
         return result;
     }

@@ -20,7 +20,7 @@ class CartService extends Service
     async addProductToCart()
     {
         const addResult =  await this.cartModel.addProductToCart();
-        if(addResult && addResult.result.nModified == 1)
+        if(addResult && addResult.modifiedCount == 1)
         {
             this.serviceResult.success()
                               .setMessage(this.lt.get("product_added_into_your_cart"))
@@ -35,7 +35,7 @@ class CartService extends Service
     async removeProductFromCart()
     {
         const removeResult =  await this.cartModel.removeProductFromCart();
-        if(removeResult && removeResult.result.nModified == 1)
+        if(removeResult && removeResult.modifiedCount == 1)
         {
             this.serviceResult.success()
                               .setMessage(this.lt.get("product_removed_from_your_cart"))

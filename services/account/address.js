@@ -39,6 +39,7 @@ class AddressService extends Service
         if(insertResult && insertResult.insertedCount == 1)
         {
             this.serviceResult.success()
+                              .setMessage(this.lt.get("address_added_successfully"))
                               .setData(insertResult.ops);
         }
         else
@@ -51,10 +52,10 @@ class AddressService extends Service
     async updateAddress()
     {
         let updateResult =  await this.addressModel.update();
-        if(updateResult && updateResult.result.nModified == 1)
+        if(updateResult && updateResult.matchedCount == 1)
         {
             this.serviceResult.success()
-                              .setMessage(this.lt.get("address_couldnt_be_updated"))
+                              .setMessage(this.lt.get("address_updated_successfully"))
                               .setData(updateResult.ops);
         }
         else

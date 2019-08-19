@@ -17,13 +17,13 @@ mongoUtil.connectToServer( function( err, client ) {
 
 } );
 
-mongoose.connect('mongodb://localhost:27017/local', { useNewUrlParser: true });
+mongoose.connect('mongodb://' + config.db.mongo.host + ':' + config.db.mongo.port + '/' + config.db.mongo.database, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;
 
 app.use(cookieParser());
 app.use(session({
-    secret: 'a3lllfmanfndf',
+    secret: config.session.secret_key,
     resave: false,
     saveUninitialized: true,
     store: new MongoStore({ mongooseConnection: db })

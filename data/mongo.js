@@ -1,13 +1,18 @@
 const MongoClient = require('mongodb').MongoClient;
 const config = require('../config');
-const url = "mongodb://"+ config.db.mongo.host + ":" +  config.db.mongo.port;
+const url = "mongodb://"+ config.db.mongo.host + ":" +  config.db.mongo.port + "/" + config.db.mongo.database +
+    "?keepAlive=true";
 
 module.exports = {
 
     connectToServer: function( callback ) {
-        console.log(config.db);
-        MongoClient.connect( url,  { useNewUrlParser: false }, function( err, client ) {
-            console.log(err);
+        MongoClient.connect( url,  { useNewUrlParser: true}, function( err, client ) {
+           console.log(url);
+            if(err)
+            {
+                console.log(err);
+            }
+            _client = client;
             _db  = client.db(config.db.mongo.database);
             return callback( err, client );
         } );
@@ -15,5 +20,9 @@ module.exports = {
 
     getDb: function() {
         return _db;
+    },
+
+    getClient: function() {
+        return _client;
     }
 };

@@ -7,18 +7,31 @@ class PaymentService extends Service
     {
         super(req, res, next);
         this.paymentModel = new PaymentModel(req, res);
+        this.lt.load("checkout/payment")
     }
 
     async getPaymentMethods()
     {
         let results =  await this.paymentModel.getPaymentMethods();
-        this.res.send(results);
+        this.serviceResult.success()
+                          .setData(results);
+        this.send();
     }
 
     async setPaymentMethod()
     {
-        let result = await this.paymentModel.setPaymentMethod();
-        this.res.send(result);
+        let result = await this.paymentModel.getPaymentMethod();
+        if(result)
+        {
+            this.req.session.customer.payment_method_id = this.params.payment_method_id;
+            this.serviceResult.success();
+        }
+        else
+        {
+            this.serviceResult.setMessage(this.lt.get("error_invalid_payment_method"))
+                              .setErrorCode(this.serviceResult.errorCodes.ERROR_INVALID_DATA);
+        }
+        this.send();
     }
 
 }

@@ -9,19 +9,44 @@ class PaymentModel extends Model
 
     async getPaymentMethods()
     {
-        const result = await this.collection.find(
+        const result = await this.collection.aggregate([
             {
-                is_active : true, "names.language_id" : this.customer.language_id
+                $project : {
+                    names: {
+                        $filter: {
+                            input: "$names",
+                            as: "names",
+                            cond:
+                            {
+                                $eq : [
+                                    "$$names.language_id", this.customer.language_id
+                                ]
+                            }
+                        }
+                    }
+
+                }
             },
             {
-                projection : { is_active : 0, "names.language_id" : 0}
-            }).toArray();
+                $unwind : "$names"
+            },
+            {
+                $project :
+                    {
+                        "name" : "$names.name"
+                    }
+            }
+        ]).toArray();
         return result;
     }
 
-    async setPaymentMethod()
+    async getPaymentMethod()
     {
-        this.req.session.customer.payment_method_id = this.params.payment_method_id;
+       const result = await this.collection.findOne(
+           {
+               _id: Number(this.params.payment_method_id)
+           });
+       return result;
     }
 }
 

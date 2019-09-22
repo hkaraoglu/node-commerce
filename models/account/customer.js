@@ -13,7 +13,7 @@ class CustomerModel extends Model
        const result = await this.collection.findOne(
            {
             email : this.body.email,
-            password : this.getEncryptedPassword(this.body.password)
+            password : this.getEncryptedPassword()
            },
            {
                projection :
@@ -32,7 +32,7 @@ class CustomerModel extends Model
                firstname : this.body.firstname,
                lastname : this.body.lastname,
                email : this.body.email,
-               password : this.getEncryptedPassword(this.body.password)
+               password : this.getEncryptedPassword()
            }
        );
     }

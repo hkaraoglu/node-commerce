@@ -40,7 +40,7 @@ class AddressService extends Service
         {
             this.serviceResult.success()
                               .setMessage(this.lt.get("address_added_successfully"))
-                              .setData(insertResult.ops);
+                              .setData(insertResult.ops[0]);
         }
         else
         {
@@ -56,7 +56,7 @@ class AddressService extends Service
         {
             this.serviceResult.success()
                               .setMessage(this.lt.get("address_updated_successfully"))
-                              .setData(updateResult.ops);
+                              .setData(await this.addressModel.getAddressDetail());
         }
         else
         {

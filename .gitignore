@@ -58,5 +58,5 @@ typings/
 .fusebox/
 # DynamoDB Local files
 .dynamodb/
-
+config.js
 .idea/

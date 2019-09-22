@@ -2,9 +2,9 @@ module.exports  = {
     "db" :
         {
             "mongo" : {
-                "host" : process.env.MONGODB_HOST ||  "localhost",
-                "port" : process.env.MONGODB_PORT ||  "27017",
-                "database" : process.env.MONGODB_DATABASE || "local"
+                "host" : process.env.MONGODB_HOST ||  "root:xidfe4-jennan-syfceV@ds163867.mlab.com",
+                "port" : process.env.MONGODB_PORT ||  "63867",
+                "database" : process.env.MONGODB_DATABASE || "heroku_jg3nq6cx"
         }
      },
     "session" :

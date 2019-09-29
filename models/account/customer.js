@@ -8,6 +8,15 @@ class CustomerModel extends Model
         super("customer", req, res);
     }
 
+    async isEmailExists()
+    {
+        const result = await this.collection.find(
+            {
+                email : this.body.email,
+            }).count();
+        return result;
+    }
+
     async getCustomer()
     {
        const result = await this.collection.findOne(
@@ -27,7 +36,7 @@ class CustomerModel extends Model
 
     async addCustomer()
     {
-       return await this.collection.insertOne(
+       return this.collection.insertOne(
            {
                firstname : this.body.firstname,
                lastname : this.body.lastname,

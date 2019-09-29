@@ -26,7 +26,7 @@ describe('TEST /account/address', async function()
         });
     });
 
-    it('get Address List', function(done)
+    it('GET account/address', function(done)
     {
         request(app)
             .get('/account/address')

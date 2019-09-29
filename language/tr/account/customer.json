@@ -2,5 +2,6 @@
 	"invalid_email_or_password": "Invalid Email Address or Password!",
 	"session_was_ended": "Session was ended!",
 	"error_session_expired": "sasd",
-	"user_registered": "User registration completed!"
+	"user_registered": "User registration completed!",
+	"email_already_registered_before": "This email address is used by another account!"
 }

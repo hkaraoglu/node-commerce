@@ -36,7 +36,6 @@ class FavoriteService extends Service
     async removeProductFromFavorites()
     {
         let removeResult =  await this.favoriteModel.removeProductFromFavorites();
-        console.log(removeResult);
         if(removeResult && removeResult.matchedCount > 0)
         {
             this.serviceResult.success()

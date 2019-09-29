@@ -3,7 +3,14 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "auth.login.test": "mocha 'tests/auth/login.test.js'",
+    "auth.logout.test": "mocha 'tests/auth/logout.test.js'",
+    "auth.register.test": "mocha 'tests/auth/register.test.js'",
+    "account.address.test": "mocha 'tests/account/address.test.js'",
+    "account.favorite.test": "mocha 'tests/account/favorite.test.js'",
+    "checkout.payment.test": "mocha 'tests/checkout/payment.test.js'",
+    "checkout.cart.test": "mocha 'tests/checkout/cart.test.js'"
   },
   "dependencies": {
     "connect-mongo": "^3.0.0",
@@ -16,5 +23,10 @@
     "language-translator": "^1.2.5",
     "mongodb": "^3.3.0-beta2",
     "morgan": "~1.9.0"
+  },
+  "devDependencies": {
+    "mocha": "^6.2.0",
+    "should": "^13.2.3",
+    "supertest": "^4.0.2"
   }
 }

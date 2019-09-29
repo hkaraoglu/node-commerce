@@ -8,12 +8,21 @@ class CustomerModel extends Model
         super("customer", req, res);
     }
 
+    async isEmailExists()
+    {
+        const result = await this.collection.find(
+            {
+                email : this.body.email,
+            }).count();
+        return result;
+    }
+
     async getCustomer()
     {
        const result = await this.collection.findOne(
            {
             email : this.body.email,
-            password : this.getEncryptedPassword(this.body.password)
+            password : this.getEncryptedPassword()
            },
            {
                projection :
@@ -27,12 +36,12 @@ class CustomerModel extends Model
 
     async addCustomer()
     {
-       return await this.collection.insertOne(
+       return this.collection.insertOne(
            {
                firstname : this.body.firstname,
                lastname : this.body.lastname,
                email : this.body.email,
-               password : this.getEncryptedPassword(this.body.password)
+               password : this.getEncryptedPassword()
            }
        );
     }

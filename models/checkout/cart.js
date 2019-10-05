@@ -30,7 +30,8 @@ class CartModel extends Model
             },
             {
                 $project : {
-                    "product_id" : "$p.product_id",
+                    "_id" : 0,
+                    "product_id" : "$p._id",
                     "name": "$p.name",
                     "price" : "$p.price",
                     "list_price" : "$p.list_price",

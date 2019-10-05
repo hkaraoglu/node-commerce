@@ -38,6 +38,7 @@ class AddressService extends Service
         let insertResult =  await this.addressModel.insert();
         if(insertResult && insertResult.insertedCount == 1)
         {
+            delete insertResult.ops[0].customer_id;
             this.serviceResult.success()
                               .setMessage(this.lt.get("address_added_successfully"))
                               .setData(insertResult.ops[0]);

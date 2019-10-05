@@ -9,7 +9,9 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const config = require('./config');
 const app = express();
-const router = express.Router();
+const expressSwagger = require('express-swagger-generator')(app);
+let swaggerOptions = require('./swagger');
+expressSwagger(swaggerOptions);
 
 mongoUtil.connectToServer( function( err, client ) {
     if (err) console.log(err);
